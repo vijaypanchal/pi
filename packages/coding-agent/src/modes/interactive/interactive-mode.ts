@@ -99,6 +99,7 @@ import { isInstallTelemetryEnabled } from "../../core/telemetry.ts";
 import type { TruncationResult } from "../../core/tools/truncate.ts";
 import { hasTrustRequiringProjectResources, ProjectTrustStore } from "../../core/trust-manager.ts";
 import { getUsageCostBreakdown } from "../../core/usage-totals.ts";
+import { getRestrictedModelWarning } from "../../core/restricted-models.ts";
 import { getChangelogPath, getNewEntries, normalizeChangelogLinks, parseChangelog } from "../../utils/changelog.ts";
 import { copyToClipboard, readClipboardText } from "../../utils/clipboard.ts";
 import { extensionForImageMimeType, readClipboardImage } from "../../utils/clipboard-image.ts";
@@ -4650,6 +4651,7 @@ export class InteractiveMode {
 				this.updateEditorBorderColor();
 				this.showStatus(`Model: ${model.id}`);
 				void this.maybeWarnAboutAnthropicSubscriptionAuth(model);
+				this.maybeWarnAboutRestrictedModel(model);
 				this.checkDaxnutsEasterEgg(model);
 			} catch (error) {
 				this.showError(error instanceof Error ? error.message : String(error));
@@ -4731,6 +4733,17 @@ export class InteractiveMode {
 			this.showWarning(ANTHROPIC_SUBSCRIPTION_AUTH_WARNING);
 		} catch {
 			// Ignore auth lookup failures for warning-only checks.
+		}
+	}
+
+	private maybeWarnAboutRestrictedModel(model: Model<any> | undefined = this.session.model): void {
+		if (!model) {
+			return;
+		}
+
+		const warning = getRestrictedModelWarning(model);
+		if (warning) {
+			this.showWarning(warning);
 		}
 	}
 

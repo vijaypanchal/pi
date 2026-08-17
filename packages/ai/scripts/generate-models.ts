@@ -1672,6 +1672,64 @@ async function loadModelsDevData(): Promise<Model<any>[]> {
 			}
 		}
 
+		// Process Sarvam models
+		if (data.sarvam?.models) {
+			for (const [modelId, model] of Object.entries(data.sarvam.models)) {
+				const m = model as ModelsDevModel;
+				if (m.tool_call !== true) continue;
+
+				models.push({
+					id: modelId,
+					name: m.name || modelId,
+					api: "openai-completions",
+					provider: "sarvam",
+					baseUrl: "https://api.sarvam.ai/v1",
+					reasoning: m.reasoning === true,
+					input: m.modalities?.input?.includes("image") ? ["text", "image"] : ["text"],
+					cost: {
+						input: m.cost?.input || 0,
+						output: m.cost?.output || 0,
+						cacheRead: m.cost?.cache_read || 0,
+						cacheWrite: m.cost?.cache_write || 0,
+					},
+					contextWindow: m.limit?.context || 4096,
+					maxTokens: m.limit?.output || 4096,
+				});
+				recordModelsDevReasoningOptions("sarvam", modelId, m);
+			}
+		}
+
+		// Add Sarvam open-weight models (requires special access)
+		const sarvamOpenWeightModels = [
+			{
+				id: "glm-5.2",
+				name: "GLM-5.2 (open-weight, requires access)",
+				contextWindow: 65536,
+				maxTokens: 8192,
+			},
+			{
+				id: "gemma-4",
+				name: "Gemma-4 (open-weight, requires access)",
+				contextWindow: 32768,
+				maxTokens: 8192,
+			},
+		];
+
+		for (const m of sarvamOpenWeightModels) {
+			models.push({
+				id: m.id,
+				name: m.name,
+				api: "openai-completions",
+				provider: "sarvam",
+				baseUrl: "https://api.sarvam.ai/v1",
+				reasoning: false,
+				input: ["text"],
+				cost: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0 },
+				contextWindow: m.contextWindow,
+				maxTokens: m.maxTokens,
+			});
+		}
+
 		// Process zAi models
 		const zaiCodingPlanVariants = [
 			{

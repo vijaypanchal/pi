@@ -8,6 +8,7 @@
 
 ### Added
 
+- Added Sarvam AI as a built-in provider with OpenAI-compatible chat completions API support and reasoning capability. Includes open-weight GLM-5.2 and Gemma-4 models (require special access). Users are notified when selecting access-restricted models.
 - Added China-specific ZAI Coding Plan models, including GLM-4.6V vision support, and API-equivalent usage cost estimates for models with published PAYG prices ([#8220](https://github.com/earendil-works/pi/issues/8220)).
 
 ### Fixed

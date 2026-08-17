@@ -83,6 +83,11 @@ pi
 | Cloudflare Workers AI | `CLOUDFLARE_API_KEY` (+ `CLOUDFLARE_ACCOUNT_ID`) | `cloudflare-workers-ai` |
 | xAI | `XAI_API_KEY` | `xai` |
 | OpenRouter | `OPENROUTER_API_KEY` | `openrouter` |
+| Sarvam AI | `SARVAM_API_KEY` | `sarvam` |
+
+### Sarvam AI
+
+**Open-weight models:** Sarvam supports open-weight models (GLM-5.2, Gemma-4) through their API, but these require special access. When you select these models, pi will show a warning with instructions on how to request access from Sarvam.
 | Vercel AI Gateway | `AI_GATEWAY_API_KEY` | `vercel-ai-gateway` |
 | ZAI Coding Plan (Global) | `ZAI_API_KEY` | `zai` |
 | ZAI Coding Plan (China) | `ZAI_CODING_CN_API_KEY` | `zai-coding-cn` |
@@ -120,6 +125,7 @@ Store credentials in `~/.pi/agent/auth.json`:
   "google": { "type": "api_key", "key": "..." },
   "opencode": { "type": "api_key", "key": "..." },
   "opencode-go": { "type": "api_key", "key": "..." },
+  "sarvam": { "type": "api_key", "key": "..." },
   "together": { "type": "api_key", "key": "..." },
   "qwen-token-plan":  { "type": "api_key", "key": "sk-sp-..." },
   "qwen-token-plan-individual": { "type": "api_key", "key": "sk-sp-..." },
