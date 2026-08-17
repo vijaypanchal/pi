@@ -1485,7 +1485,8 @@ function detectCompat(model: Model<"openai-completions">): ResolvedOpenAIComplet
 		baseUrl.includes("opencode.ai") ||
 		isCloudflareWorkersAI ||
 		isCloudflareAiGateway ||
-		isAntLing;
+		isAntLing ||
+		provider === "sarvam";
 
 	const useMaxTokens =
 		baseUrl.includes("chutes.ai") ||

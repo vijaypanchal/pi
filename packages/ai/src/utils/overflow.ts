@@ -39,6 +39,7 @@ const OVERFLOW_PATTERNS = [
 	/request_too_large/i, // Anthropic request byte-size overflow (HTTP 413)
 	/input is too long for requested model/i, // Amazon Bedrock
 	/exceeds the context window/i, // OpenAI (Completions & Responses API)
+	/exceeds the model context window/i, // Sarvam: "prompt_tokens (159451) + max_tokens (2048) = 161499 exceeds the model context window of 128000 tokens for sarvam-105b."
 	/exceeds (?:the )?(?:model'?s )?maximum context length(?: of [\d,]+ tokens?|\s*\([\d,]+\))/i, // OpenAI-compatible proxies (LiteLLM)
 	/input token count.*exceeds the maximum/i, // Google (Gemini)
 	/maximum prompt length is \d+/i, // xAI (Grok)

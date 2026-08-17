@@ -201,6 +201,18 @@ describe("AI Providers Abort Tests", () => {
 		});
 	});
 
+	describe.skipIf(!process.env.SARVAM_API_KEY)("Sarvam Provider Abort", () => {
+		const llm = getModel("sarvam", "sarvam-105b");
+
+		it("should abort mid-stream", { retry: 3 }, async () => {
+			await testAbortSignal(llm);
+		});
+
+		it("should handle immediate abort", { retry: 3 }, async () => {
+			await testImmediateAbort(llm);
+		});
+	});
+
 	describe.skipIf(!process.env.MINIMAX_API_KEY)("MiniMax Provider Abort", () => {
 		const llm = getModel("minimax", "MiniMax-M2.7");
 

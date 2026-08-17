@@ -610,7 +610,7 @@ describe("Generate E2E Tests", () => {
 		});
 
 		it("should handle multi-turn with thinking and tools", { retry: 3 }, async () => {
-				await multiTurn(llm, { reasoningEffort: "medium" });
+			await multiTurn(llm, { reasoningEffort: "medium" });
 		});
 	});
 

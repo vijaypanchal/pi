@@ -5,15 +5,15 @@ import type { Model } from "@earendil-works/pi-ai";
  * Users should be informed when selecting these models.
  */
 const RESTRICTED_MODELS = new Set([
-	"glm-5.2",      // Sarvam open-weight, requires access
-	"gemma-4",      // Sarvam open-weight, requires access
+	"glm-5.2", // Sarvam open-weight, requires access
+	"gemma-4", // Sarvam open-weight, requires access
 ]);
 
-export function isRestrictedModel(model: Model): boolean {
+export function isRestrictedModel(model: Model<any>): boolean {
 	return RESTRICTED_MODELS.has(model.id);
 }
 
-export function getRestrictedModelWarning(model: Model): string | undefined {
+export function getRestrictedModelWarning(model: Model<any>): string | undefined {
 	if (!isRestrictedModel(model)) {
 		return undefined;
 	}

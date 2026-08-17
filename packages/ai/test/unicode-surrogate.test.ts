@@ -595,6 +595,23 @@ describe("AI Providers Unicode Surrogate Pair Tests", () => {
 		});
 	});
 
+	describe.skipIf(!process.env.SARVAM_API_KEY)("Sarvam Provider Unicode Handling", () => {
+		const llm = getModel("sarvam", "sarvam-105b");
+		const options = { reasoningEffort: "medium" } satisfies StreamOptionsWithExtras;
+
+		it("should handle emoji in tool results", { retry: 3, timeout: 30000 }, async () => {
+			await testEmojiInToolResults(llm, options);
+		});
+
+		it("should handle real-world LinkedIn comment data with emoji", { retry: 3, timeout: 30000 }, async () => {
+			await testRealWorldLinkedInData(llm, options);
+		});
+
+		it("should handle unpaired high surrogate (0xD83D) in tool results", { retry: 3, timeout: 30000 }, async () => {
+			await testUnpairedHighSurrogate(llm, options);
+		});
+	});
+
 	describe.skipIf(!process.env.MISTRAL_API_KEY)("Mistral Provider Unicode Handling", () => {
 		const llm = getModel("mistral", "devstral-medium-latest");
 

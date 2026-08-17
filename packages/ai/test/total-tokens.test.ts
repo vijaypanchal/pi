@@ -437,6 +437,29 @@ describe("totalTokens field", () => {
 	});
 
 	// =========================================================================
+	// Sarvam
+	// =========================================================================
+
+	describe.skipIf(!process.env.SARVAM_API_KEY)("Sarvam", () => {
+		it(
+			"sarvam-105b - should return totalTokens equal to sum of components",
+			{ retry: 3, timeout: 60000 },
+			async () => {
+				const llm = getModel("sarvam", "sarvam-105b");
+
+				console.log(`\nSarvam / ${llm.id}:`);
+				const { first, second } = await testTotalTokensWithCache(llm, { apiKey: process.env.SARVAM_API_KEY });
+
+				logUsage("First request", first);
+				logUsage("Second request", second);
+
+				assertTotalTokensEqualsComponents(first);
+				assertTotalTokensEqualsComponents(second);
+			},
+		);
+	});
+
+	// =========================================================================
 	// Mistral
 	// =========================================================================
 

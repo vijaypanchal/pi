@@ -381,6 +381,24 @@ describe("Context overflow error handling", () => {
 	});
 
 	// =============================================================================
+	// Sarvam
+	// =============================================================================
+
+	describe.skipIf(!process.env.SARVAM_API_KEY)("Sarvam", () => {
+		it("sarvam-105b - should detect overflow via isContextOverflow", async () => {
+			const model = getModel("sarvam", "sarvam-105b");
+			const result = await testContextOverflow(model, process.env.SARVAM_API_KEY!);
+			logResult(result);
+
+			if (result.stopReason === "error") {
+				expect(isContextOverflow(result.response, model.contextWindow)).toBe(true);
+			} else {
+				console.log("  Sarvam returned non-overflow result, skipping overflow detection");
+			}
+		}, 120000);
+	});
+
+	// =============================================================================
 	// Mistral
 	// =============================================================================
 
